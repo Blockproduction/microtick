@@ -1,8 +1,10 @@
 # Microtick chain migration instructions
 
+# Warning: this guide is not yet complete
+
 These are the steps to upgrade from `microtickzone-a1` to `microtickzone-a2`. The Microtick team
 will post the new genesis file, but we recommend that validator operators
-use these instructions to verify genesis file.
+use these instructions to verify genesis file. Please join us in the [validator channel of the Microtick Discord.](https://discord.gg/jz7Jt95)
 
 If the proposal `Microtick-a2 Upgrade Proposal` passes, the target time for the upgrade procedure is
 on `March 18, 2021 at or around 15:00 UTC`. Since block times vary, the precise block height will be `3,343,205`.
@@ -17,7 +19,7 @@ on `March 18, 2021 at or around 15:00 UTC`. Since block times vary, the precise 
 
 No changes have been made to the Microtick software. This upgrade is intended to reset the state of the chain,
 requiring less disk space and making it easier for a node to recover. We will also add some additional markets.
-This will not yet be the Stargate upgrade.
+This will not yet be the Stargate upgrade. Please join us in the [validator channel of the Microtick Discord.](https://discord.gg/jz7Jt95)
 
 ## Risks
 
@@ -95,7 +97,7 @@ __Note__: It is assumed you are currently operating a full-node running v1.0.0 o
    $ mtd migrate v1.0.0 mt_genesis_export.json --chain-id=microtickzone-a2 --genesis-time=[PLACEHOLDER]> genesis.json
    ```
    
-6. Verify the SHA256 of the final genesis JSON:
+6. Verify the SHA256 hash of the final genesis JSON [(compare it with others in Discord)](https://discord.gg/jz7Jt95):
 
    ```bash
    $ jq -S -c -M '' genesis.json | shasum -a 256
@@ -112,3 +114,5 @@ __Note__: It is assumed you are currently operating a full-node running v1.0.0 o
    ```
 
 8. Move the new `genesis.json` to your `.mtd/config/` directory
+
+Please join us in the [validator channel of the Microtick Discord](https://discord.gg/jz7Jt95) to verify your genesis hash before launching.
