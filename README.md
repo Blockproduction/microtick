@@ -1,11 +1,12 @@
 # Microtick chain migration instructions
 
 These are the steps to upgrade from `microtickzone-a1` to `microtickzone-a2`. The Microtick team
-will post the new genesis file, but we recommend that validator operators
+will post the new genesis file as a reference, but we recommend that validator operators
 use these instructions to verify genesis file.
 
 If the proposal `Microtick-a2 Upgrade Proposal` passes, the target time for the upgrade procedure is
 on `March 18, 2021 at or around 15:00 UTC`. Since block times vary, the precise block height will be `3,343,205`.
+Precisely, this means block 3,343,205 will be the last block signed for the microtickzone-a1 chain.
 
   - [Preliminary](#preliminary)
   - [Risks](#risks)
@@ -92,17 +93,23 @@ __Note__: It is assumed you are currently operating a full-node running v1.0.0 o
 5. Migrate exported state:
 
    ```bash
-   $ mtd migrate v1.0.0 mt_genesis_export.json --chain-id=microtickzone-a2 --genesis-time=[PLACEHOLDER]> genesis.json
+   $ ./microtick-1-migration mt_genesis_export.json > new_genesis.json
    ```
    
 6. Verify the SHA256 of the final genesis JSON:
 
    ```bash
-   $ jq -S -c -M '' genesis.json | shasum -a 256
-   [PLACEHOLDER]  genesis.json
+   $ jq -S -c -M '' new_genesis.json | shasum -a 256
+   [PLACEHOLDER]  new_genesis.json
    ```
 
-7. Reset state:
+7. Copy the new genesis into place (if and only if the checksum you get matches the consensus)
+
+   ```bash
+   $ cp new_genesis.json $MTROOT/mtd/config/genesis.json
+   ```
+
+8. Reset state:
 
    **NOTE**: Be sure you have a complete backed up state of your node before proceeding with this step.
    See [Recovery](#recovery) for details on how to proceed.
@@ -111,4 +118,3 @@ __Note__: It is assumed you are currently operating a full-node running v1.0.0 o
    $ mtd unsafe-reset-all
    ```
 
-8. Move the new `genesis.json` to your `.mtd/config/` directory
